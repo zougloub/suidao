@@ -32,7 +32,7 @@ def put(url):
 		def r():
 			try:
 				return s.recv(1024)
-			except IOError:#socket.error as e:
+			except IOError:
 				return b""
 		def w(data):
 			while data:
@@ -57,7 +57,6 @@ def get(url):
 	if url not in sessions:
 		return b"", 404
 	fd_i, fd_o, r, w = sessions[url]
-	#print("get")
 	res = r()
 	return res, 201
 
@@ -66,12 +65,9 @@ def post(url):
 	if url not in sessions:
 		return b"", 404
 	fd_i, fd_o, r, w = sessions[url]
-	#print("put")
 	b = io.BytesIO()
 	flask.request.files["file"].save(b)
 	w(b.getvalue())
-	#os.fflush(fd_o)
-	#os.flush(fd_o)
 	return flask.jsonify(
 	 response='success',
 	), 201
