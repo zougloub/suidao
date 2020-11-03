@@ -59,6 +59,6 @@ if __name__ == "__main__":
 		res = s.get(url)
 		if res.status_code != 201:
 			raise Exception(res)
-		sys.stdout.write(res.content)
+		sys.stdout.buffer.write(res.content)
 		sys.stdout.flush()
 
